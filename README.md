@@ -1,8 +1,8 @@
 # CheckCle on Railway
 
-A pinned, credential-safe Railway deployment for [CheckCle](https://github.com/operacle/checkcle), an open-source uptime and infrastructure monitoring platform.
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/checkcle-1?referralCode=ZqgrJ0)
 
-The verified Deploy on Railway button is added only after the published route passes identity and topology checks.
+A pinned, credential-safe Railway deployment for [CheckCle](https://github.com/operacle/checkcle), an open-source uptime and infrastructure monitoring platform.
 
 ## What this deploys
 
