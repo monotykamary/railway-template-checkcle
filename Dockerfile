@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.licenses="MIT"
 COPY railway-entrypoint.sh /app/railway-entrypoint.sh
 RUN chmod 0755 /app/railway-entrypoint.sh
 
-ENV PORT=8091
+ENV CHECKCLE_HTTP_PORT=8090
+ENV CHECKCLE_OPERATION_PORT=8091
 ENV POCKETBASE_ENABLED=true
-ENV POCKETBASE_URL=http://127.0.0.1:8090
 
 ENTRYPOINT ["/app/railway-entrypoint.sh"]

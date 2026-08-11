@@ -19,7 +19,7 @@ The template creates one `checkcle` service and one persistent volume mounted at
 
 ### Implementation Details
 
-The CheckCle service owns the public HTTPS domain on port `8090`. The container runs PocketBase and CheckCle's operation service together, matching the upstream release topology. A narrow adapter rotates the upstream seeded administrator before serving traffic and encrypts PocketBase settings with a generated key.
+The CheckCle service owns the public HTTPS domain on Railway’s injected `PORT` (port `8080` in the serialized template). The container runs PocketBase and CheckCle's operation service together, matching the upstream release topology. A narrow adapter rotates the upstream seeded administrator before serving traffic and encrypts PocketBase settings with a generated key.
 
 Read `CHECKCLE_ADMIN_EMAIL` and the generated `CHECKCLE_ADMIN_PASSWORD` from the service variables, then sign in and rotate the password. Do not change the encryption key after data has been written.
 

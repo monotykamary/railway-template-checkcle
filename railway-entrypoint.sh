@@ -6,6 +6,8 @@ set -eu
 : "${CHECKCLE_ENCRYPTION_KEY:?CHECKCLE_ENCRYPTION_KEY is required}"
 
 DATA_DIR="${CHECKCLE_DATA_DIR:-/mnt/pb_data}"
+HTTP_PORT="${PORT:-${CHECKCLE_HTTP_PORT:-8090}}"
+OPERATION_PORT="${CHECKCLE_OPERATION_PORT:-8091}"
 DEFAULT_ADMIN_EMAIL="admin@example.com"
 
 mkdir -p "$DATA_DIR"
@@ -28,7 +30,7 @@ if [ "$CHECKCLE_ADMIN_EMAIL" != "$DEFAULT_ADMIN_EMAIL" ]; then
 fi
 
 /app/pocketbase serve \
-  --http=0.0.0.0:8090 \
+  --http="0.0.0.0:${HTTP_PORT}" \
   --dir "$DATA_DIR" \
   --encryptionEnv CHECKCLE_ENCRYPTION_KEY 2>&1 | grep -vE 'REST API|Dashboard' &
 pocketbase_pid=$!
@@ -43,7 +45,7 @@ shutdown() {
 }
 trap shutdown INT TERM EXIT
 
-until curl -fsS http://127.0.0.1:8090/api/health >/dev/null; do
+until curl -fsS "http://127.0.0.1:${HTTP_PORT}/api/health" >/dev/null; do
   if ! kill -0 "$pocketbase_pid" 2>/dev/null; then
     echo "PocketBase exited before becoming healthy." >&2
     exit 1
@@ -51,7 +53,7 @@ until curl -fsS http://127.0.0.1:8090/api/health >/dev/null; do
   sleep 1
 done
 
-/app/service-operation &
+PORT="$OPERATION_PORT" POCKETBASE_URL="http://127.0.0.1:${HTTP_PORT}" /app/service-operation &
 operation_pid=$!
 
 while kill -0 "$pocketbase_pid" 2>/dev/null && kill -0 "$operation_pid" 2>/dev/null; do

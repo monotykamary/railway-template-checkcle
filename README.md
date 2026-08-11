@@ -11,7 +11,7 @@ The verified Deploy on Railway button is added only after the published route pa
 - One persistent data volume with scheduled backups
 - Generated administrator credentials and a generated PocketBase settings-encryption key
 
-The adapter replaces the upstream public default password before the application starts and removes the seeded default superuser when a different administrator email is configured.
+The adapter binds PocketBase to Railway’s injected `PORT`, keeps the operation service on an internal port, replaces the upstream public default password before startup, and removes the seeded default superuser when a different administrator email is configured.
 
 ## First login
 
